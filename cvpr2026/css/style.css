@@ -1,9 +1,116 @@
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../fonts/Quicksand-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: transparent;
+  padding: 20px 0;
+  transition: background 0.3s ease;
+}
+
+#header .header-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#header .logo-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#header .cvpr-logo {
+  display: flex;
+  align-items: center;
+}
+
+#header .cvpr-logo img {
+  height: 32px;
+  width: auto;
+}
+
+#header .logo-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+#header .logo {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 3px;
+  text-decoration: none;
+}
+
+#header .logo:hover {
+  color: #f82249;
+}
+
+#header .nav-menu {
+  display: flex;
+  gap: 30px;
+}
+
+#header .nav-menu a {
+  font-family: "Raleway", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+#header .nav-menu a:hover {
+  color: #f82249;
+}
+
+#header.header-scrolled {
+  background: rgba(6, 12, 34, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 12px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/*--------------------------------------------------------------
+# Intro Section
+--------------------------------------------------------------*/
+
   #intro {
     width: 100%;
     height: 100vh;
-    background: #ffffff;
+    background: url(../img/Denver-Skyline-Wallpaper-Mural.jpg) top center;
+    background-size: cover;
     overflow: hidden;
     position: relative;
+  }
+
+  #intro:before {
+    content: "";
+    background: rgba(6, 12, 34, 0.3);  /* Dark overlay on background image */
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
   }
 
   #intro .intro-container {
@@ -21,15 +128,21 @@
   }
 
   #intro h1 {
-    color: #333;
+    color: #fff;
     font-family: "Raleway", sans-serif;
     font-size: 56px;
     font-weight: 600;
-    text-transform: uppercase;
+  }
+
+  #intro h1.vita-title {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 62px;
+    letter-spacing: 8px;
   }
 
   #intro p {
-    color: #555;
+    color: #ebebeb;
     font-weight: 700;
     font-size: 20px;
   }
@@ -45,7 +158,7 @@
     transition: 0.5s;
     line-height: 1;
     margin: 10px;
-    color: #f82249;
+    color: #fff;
     border: 2px solid #f82249;
   }
 
@@ -54,8 +167,95 @@
     color: #fff;
   }
 
-  /* Responsive - Mobile */
-  @media (max-width: 991px) {
+/*--------------------------------------------------------------
+# About Section
+--------------------------------------------------------------*/
+
+#about {
+  padding: 60px 0 40px 0;
+  background: #fff;
+}
+
+#about .container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+#about .row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+#about .col-lg-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+  padding: 0 15px;
+}
+
+#about .col-lg-3 {
+  flex: 0 0 25%;
+  max-width: 25%;
+  padding: 0 15px;
+}
+
+#about h2 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #0e1b4d;
+}
+
+#about h3 {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: #0e1b4d;
+}
+
+#about p {
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+/* Responsive - Mobile */
+@media (max-width: 991px) {
+    #header {
+      padding: 15px 0;
+    }
+
+    #header .header-container {
+      padding: 0 20px;
+    }
+
+    #header .logo-group {
+      gap: 10px;
+    }
+
+    #header .cvpr-logo img {
+      height: 24px;
+    }
+
+    #header .logo-divider {
+      height: 18px;
+    }
+
+    #header .logo {
+      font-size: 22px;
+    }
+
+    #header .nav-menu {
+      gap: 15px;
+    }
+
+    #header .nav-menu a {
+      font-size: 12px;
+    }
+
     #intro .intro-container {
       top: 70px;
     }
@@ -64,7 +264,222 @@
       font-size: 34px;
     }
 
+    #intro h1.vita-title {
+      font-size: 42px;
+      letter-spacing: 4px;
+    }
+
     #intro p {
       font-size: 16px;
     }
+
+    #about .col-lg-6,
+    #about .col-lg-3 {
+      flex: 0 0 100%;
+      max-width: 100%;
+      margin-bottom: 20px;
+    }
+
+    #about h2 {
+      font-size: 28px;
+    }
+
+  }
+
+/*--------------------------------------------------------------
+# Speakers Section
+--------------------------------------------------------------*/
+
+#speakers {
+  padding: 60px 0 0 0;
+  background: #f6f7fd;
+}
+
+#speakers .container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+#speakers .section-header {
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+#speakers .section-header h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #0e1b4d;
+}
+
+#speakers .row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+#speakers .col-lg-2 {
+  flex: 0 0 16.666667%;
+  max-width: 16.666667%;
+  padding: 0 15px;
+}
+
+#speakers .speaker {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+#speakers .speaker > a {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+#speakers .speaker img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#speakers .speaker .details h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #0e1b4d;
+}
+
+#speakers .speaker .details h3 a {
+  color: #0e1b4d;
+}
+
+#speakers .speaker .details h3 a:hover {
+  color: #f82249;
+}
+
+#speakers .speaker .details p {
+  font-size: 13px;
+  color: #555;
+  font-style: italic;
+}
+
+/*--------------------------------------------------------------
+# Organizers Section
+--------------------------------------------------------------*/
+
+#organizers {
+  padding: 0 0 60px 0;
+  background: #f6f7fd;
+}
+
+#organizers .container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+#organizers .section-header {
+  text-align: left;
+  margin-bottom: 40px;
+  padding-top: 40px;
+  border-top: 1px solid #e0e0e0;
+}
+
+#organizers .section-header h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #0e1b4d;
+}
+
+#organizers .row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+#organizers .col-lg-3 {
+  flex: 0 0 25%;
+  max-width: 25%;
+  padding: 0 15px;
+}
+
+#organizers .organizer {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+#organizers .organizer img {
+  width: 100%;
+  display: block;
+}
+
+#organizers .organizer .details {
+  background: rgba(6, 12, 34, 0.76);
+  position: absolute;
+  left: 0;
+  bottom: -40px;
+  right: 0;
+  text-align: center;
+  padding: 15px 10px;
+  transition: all 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+#organizers .organizer .details h3 {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+#organizers .organizer .details h3 a {
+  color: #fff;
+}
+
+#organizers .organizer .details h3 a:hover {
+  color: #f82249;
+}
+
+#organizers .organizer .details p {
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+#organizers .organizer .details .social {
+  height: 30px;
+}
+
+#organizers .organizer .details .social a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+#organizers .organizer .details .social a:hover {
+  color: #f82249;
+}
+
+#organizers .organizer:hover .details {
+  bottom: 0;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive - Speakers & Organizers */
+@media (max-width: 991px) {
+  #speakers .col-lg-2 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+
+  #organizers .col-lg-3 {
+    flex: 0 0 50%;
+    max-width: 50%;
   }
