@@ -130,21 +130,21 @@
   #intro h1 {
     color: #fff;
     font-family: "Raleway", sans-serif;
-    font-size: 56px;
+    font-size: 70px;
     font-weight: 600;
   }
 
   #intro h1.vita-title {
     font-family: 'Quicksand', sans-serif;
     font-weight: 700;
-    font-size: 62px;
+    font-size: 77px;
     letter-spacing: 8px;
   }
 
   #intro p {
     color: #ebebeb;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 27px;
   }
 
   #intro .about-btn {
