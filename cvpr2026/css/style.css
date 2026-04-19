@@ -215,6 +215,10 @@
   color: #0e1b4d;
 }
 
+#about p.venue-info {
+  font-size: 18px;
+}
+
 #about p {
   font-size: 14px;
   line-height: 1.8;
