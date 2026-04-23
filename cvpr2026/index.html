@@ -411,6 +411,90 @@ section { padding: 80px 0; }
 .organizer-info .link-icon:hover { color: var(--accent); }
 
 /* ═══════════════════════════════════════
+   SCHEDULE SECTION
+═══════════════════════════════════════ */
+#schedule {
+  background: var(--light);
+}
+
+.schedule-list {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  overflow: hidden;
+}
+
+.schedule-timezone {
+  margin-top: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 12.5px;
+  letter-spacing: 0.1em;
+  color: #718096;
+}
+
+.schedule-item {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  align-items: center;
+  gap: 32px;
+  padding: 20px 36px;
+  border-bottom: 1px solid var(--mid);
+}
+
+.schedule-item:last-child {
+  border-bottom: none;
+}
+
+.schedule-time {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--teal);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.schedule-role {
+  font-family: 'Courier New', monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #718096;
+  margin-bottom: 3px;
+}
+
+.schedule-name {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.schedule-name a { color: var(--text); }
+.schedule-name a:hover { color: var(--accent); }
+
+.schedule-break {
+  background: var(--light);
+}
+
+.schedule-break .schedule-role {
+  font-style: italic;
+  color: #a0aec0;
+  letter-spacing: 0.12em;
+  margin-bottom: 0;
+}
+
+@media (max-width: 700px) {
+  .schedule-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 16px 20px;
+  }
+}
+
+/* ═══════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════ */
 footer {
@@ -442,6 +526,7 @@ footer a { color: var(--cyan); }
     <a href="#about">About</a>
     <a href="#speakers">Speakers</a>
     <a href="#organizers">Organizers</a>
+    <a href="#schedule">Schedule</a>
   </nav>
 </header>
 
@@ -590,6 +675,89 @@ footer a { color: var(--cyan); }
           <h3><a href="https://www.khoury.northeastern.edu/home/eelhami/" target="_blank">Ehsan Elhamifar</a></h3>
           <p>Northeastern University</p>
           <a href="https://www.khoury.northeastern.edu/home/eelhami/" target="_blank" class="link-icon">🔗</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SCHEDULE ═══════════ -->
+<section id="schedule">
+  <div class="container">
+    <div class="section-header">
+      <h2>Schedule</h2>
+      <p class="schedule-timezone">[in Denver local time &middot; MDT / UTC&minus;6]</p>
+    </div>
+    <div class="schedule-list">
+
+      <div class="schedule-item">
+        <div class="schedule-time">1:30 &ndash; 2:00</div>
+        <div class="schedule-text">
+          <div class="schedule-role">Opening Talk</div>
+          <div class="schedule-name"><a href="https://www.khoury.northeastern.edu/home/eelhami/" target="_blank">Ehsan Elhamifar</a></div>
+        </div>
+      </div>
+
+      <div class="schedule-item">
+        <div class="schedule-time">2:00 &ndash; 2:30</div>
+        <div class="schedule-text">
+          <div class="schedule-role">Invited Talk 1</div>
+          <div class="schedule-name"><a href="https://www.cs.utexas.edu/~grauman/" target="_blank">Kristen Grauman</a></div>
+        </div>
+      </div>
+
+      <div class="schedule-item">
+        <div class="schedule-time">2:30 &ndash; 3:00</div>
+        <div class="schedule-text">
+          <div class="schedule-role">Invited Talk 2</div>
+          <div class="schedule-name"><a href="https://www.di.ens.fr/~laptev/" target="_blank">Ivan Laptev</a></div>
+        </div>
+      </div>
+
+      <div class="schedule-item">
+        <div class="schedule-time">3:00 &ndash; 3:30</div>
+        <div class="schedule-text">
+          <div class="schedule-role">Invited Talk 3</div>
+          <div class="schedule-name"><a href="https://antoninofurnari.github.io/" target="_blank">Antonino Furnari</a></div>
+        </div>
+      </div>
+
+      <div class="schedule-item schedule-break">
+        <div class="schedule-time">3:30 &ndash; 4:00</div>
+        <div class="schedule-text">
+          <div class="schedule-role">Break</div>
+        </div>
+      </div>
+
+      <div class="schedule-item">
+        <div class="schedule-time">4:00 &ndash; 4:30</div>
+        <div class="schedule-text">
+          <div class="schedule-role">Invited Talk 4</div>
+          <div class="schedule-name"><a href="https://people.inf.ethz.ch/marc.pollefeys/" target="_blank">Marc Pollefeys</a></div>
+        </div>
+      </div>
+
+      <div class="schedule-item">
+        <div class="schedule-time">4:30 &ndash; 5:00</div>
+        <div class="schedule-text">
+          <div class="schedule-role">Invited Talk 5</div>
+          <div class="schedule-name"><a href="https://www.gedasbertasius.com/" target="_blank">Gedas Bertasius</a></div>
+        </div>
+      </div>
+
+      <div class="schedule-item">
+        <div class="schedule-time">5:00 &ndash; 5:30</div>
+        <div class="schedule-text">
+          <div class="schedule-role">Invited Talk 6</div>
+          <div class="schedule-name"><a href="https://www.cs.columbia.edu/~feiner/" target="_blank">Steven Feiner</a></div>
+        </div>
+      </div>
+
+      <div class="schedule-item schedule-break">
+        <div class="schedule-time">5:30 &ndash; 5:40</div>
+        <div class="schedule-text">
+          <div class="schedule-role">Concluding Remarks</div>
         </div>
       </div>
 
