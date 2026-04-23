@@ -1,222 +1,810 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VITA 2026 - Workshop on Vision for Intelligent Task Assistants</title>
-  <meta name="description" content="The 1st Workshop on Vision for Intelligent Task Assistants at CVPR 2026">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: "Raleway", sans-serif;
-    }
-    a {
-      text-decoration: none;
-      color: #f82249;
-    }
-    a:hover {
-      color: #d01f40;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VITA 2026 — Workshop on Vision for Intelligent Task Assistants</title>
+<meta name="description" content="The 1st Workshop on Vision for Intelligent Task Assistants at CVPR 2026">
+<!-- No external fonts needed: Georgia + Courier New are system fonts -->
+
+<style>
+/* ═══════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --cyan:    #50d2e6;
+  --teal:    #1ea0b4;
+  --accent:  #f82249;
+  --dark:    #040c1a;
+  --text:    #2d3748;
+  --light:   #f7f9fc;
+  --mid:     #eef2f7;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  color: var(--text);
+  background: #fff;
+}
+
+a { text-decoration: none; color: var(--accent); }
+a:hover { color: #c0182e; }
+
+/* ═══════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════ */
+#header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+#header.scrolled {
+  background: rgba(4, 12, 26, 0.97);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+}
+
+.logo-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cvpr-logo img { height: 28px; }
+
+.logo-divider {
+  width: 1px; height: 24px;
+  background: rgba(255,255,255,0.25);
+}
+
+.logo {
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.1em;
+  color: var(--cyan) !important;
+}
+
+nav a {
+  color: rgba(255,255,255,0.85);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  font-family: 'Courier New', monospace;
+  margin-left: 32px;
+  transition: color 0.2s;
+}
+nav a:hover { color: var(--cyan); }
+
+/* ═══════════════════════════════════════
+   HERO (animated canvas section)
+═══════════════════════════════════════ */
+#intro {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--dark);
+}
+
+#vita-canvas {
+  display: block;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+}
+
+#intro-vignette {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center,
+    transparent 40%,
+    rgba(2,8,20,0.55) 75%,
+    rgba(2,8,20,0.88) 100%);
+  z-index: 1; pointer-events: none;
+}
+
+#intro-scanlines {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px, transparent 3px,
+    rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px
+  );
+  z-index: 2; pointer-events: none; opacity: 0.4;
+}
+
+.intro-content {
+  position: absolute; inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.intro-label {
+  font-family: 'Georgia', serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(80, 210, 230, 0.75);
+}
+
+.intro-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(42px, 6vw, 80px);
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  line-height: 1.15;
+  text-align: center;
+  text-shadow: 0 0 60px rgba(60,180,220,0.4), 0 2px 40px rgba(0,0,0,0.8);
+}
+
+.intro-title-vita {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(52px, 8vw, 110px);
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: 0.25em;
+  text-shadow: 0 0 80px rgba(80,210,230,0.5);
+}
+
+.intro-sub {
+  margin-top: 22px;
+  font-size: 23px;
+  letter-spacing: 0.22em;
+  color: rgba(120,200,215,0.65);
+  font-family: 'Georgia', serif;
+  text-align: center;
+}
+
+.intro-btn {
+  margin-top: 10px;
+  display: inline-block;
+  padding: 13px 36px;
+  border: 1.5px solid var(--cyan);
+  color: var(--cyan) !important;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: background 0.25s, color 0.25s;
+}
+.intro-btn:hover {
+  background: var(--cyan);
+  color: var(--dark) !important;
+}
+
+/* ═══════════════════════════════════════
+   SHARED SECTION STYLES
+═══════════════════════════════════════ */
+section { padding: 80px 0; }
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+.section-header h2 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-family: Georgia, 'Times New Roman', serif;
+  color: var(--text);
+  position: relative;
+  display: inline-block;
+  padding-bottom: 14px;
+}
+
+.section-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 50px; height: 3px;
+  background: var(--accent);
+}
+
+/* ═══════════════════════════════════════
+   ABOUT SECTION
+═══════════════════════════════════════ */
+#about {
+  background: var(--light);
+}
+
+#about h2 {
+  font-size: 28px;
+  font-weight: 700;
+  font-family: Georgia, 'Times New Roman', serif;
+  margin-bottom: 20px;
+  color: var(--text);
+  position: relative;
+  padding-bottom: 12px;
+}
+
+#about h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 40px; height: 3px;
+  background: var(--accent);
+}
+
+#about p {
+  font-size: 15.5px;
+  line-height: 1.85;
+  color: #4a5568;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr; }
+}
+
+.venue-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 28px 24px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+}
+
+.venue-card h3 {
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 10px;
+}
+
+.venue-card p {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #4a5568;
+}
+
+/* ═══════════════════════════════════════
+   SPEAKERS SECTION
+═══════════════════════════════════════ */
+#speakers {
+  background: #fff;
+}
+
+.speakers-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1024px) { .speakers-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px)  { .speakers-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.speaker-card {
+  text-align: center;
+}
+
+.speaker-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--mid);
+  transition: border-color 0.25s, transform 0.25s;
+  display: block;
+  margin: 0 auto 14px;
+  max-width: 130px;
+}
+
+.speaker-card:hover img {
+  border-color: var(--cyan);
+  transform: translateY(-3px);
+}
+
+.speaker-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  font-family: Georgia, 'Times New Roman', serif;
+  margin-bottom: 4px;
+}
+
+.speaker-card h3 a { color: var(--text); }
+.speaker-card h3 a:hover { color: var(--accent); }
+
+.speaker-card p {
+  font-size: 12.5px;
+  color: #718096;
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════
+   ORGANIZERS SECTION
+═══════════════════════════════════════ */
+#organizers {
+  background: var(--mid);
+}
+
+.organizers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+@media (max-width: 900px)  { .organizers-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px)  { .organizers-grid { grid-template-columns: 1fr; } }
+
+.organizer-card {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 18px rgba(0,0,0,0.08);
+  transition: transform 0.25s, box-shadow 0.25s;
+  text-align: center;
+}
+
+.organizer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+}
+
+.organizer-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+.organizer-info {
+  padding: 18px 14px 20px;
+}
+
+.organizer-info h3 {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: Georgia, 'Times New Roman', serif;
+  margin-bottom: 5px;
+}
+
+.organizer-info h3 a { color: var(--text); }
+.organizer-info h3 a:hover { color: var(--accent); }
+
+.organizer-info p {
+  font-size: 12.5px;
+  color: #718096;
+  line-height: 1.45;
+  margin-bottom: 10px;
+}
+
+.organizer-info .link-icon {
+  font-size: 16px;
+  color: var(--teal);
+  transition: color 0.2s;
+}
+.organizer-info .link-icon:hover { color: var(--accent); }
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer {
+  background: var(--dark);
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 28px 20px;
+  font-size: 13px;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.05em;
+}
+
+footer a { color: var(--cyan); }
+</style>
 </head>
 <body>
-  <header id="header">
-    <div class="header-container">
-      <div class="logo-group">
-        <a href="https://cvpr.thecvf.com/" target="_blank" rel="noopener noreferrer" class="cvpr-logo">
-          <img src="img/cvpr-navbar-logo.svg" alt="CVPR 2026">
-        </a>
-        <span class="logo-divider"></span>
-        <a href="#intro" class="logo">VITA</a>
+
+<!-- ═══════════ NAVBAR ═══════════ -->
+<header id="header">
+  <div class="logo-group">
+    <a href="https://cvpr.thecvf.com/" target="_blank" class="cvpr-logo">
+      <img src="img/cvpr-navbar-logo.svg" alt="CVPR 2026">
+    </a>
+    <span class="logo-divider"></span>
+    <a href="#intro" class="logo">VITA</a>
+  </div>
+  <nav>
+    <a href="#intro">Home</a>
+    <a href="#about">About</a>
+    <a href="#speakers">Speakers</a>
+    <a href="#organizers">Organizers</a>
+  </nav>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="intro">
+  <canvas id="vita-canvas"></canvas>
+  <div id="intro-vignette"></div>
+  <div id="intro-scanlines"></div>
+
+  <div class="intro-content">
+    <div class="intro-label">CVPR 2026 &nbsp;·&nbsp; Workshop</div>
+    <div class="intro-title">Vision for Intelligent<br><span style="color:#5ce8f0;">Task Assistants</span></div>
+    <div class="intro-sub">VITA 2026 &nbsp;·&nbsp; June 3, 1:00 PM &nbsp;·&nbsp; Denver, CO</div>
+    <a href="#about" class="intro-btn">About VITA 2026</a>
+  </div>
+</section>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div style="grid-column: span 1;">
+        <h2>About VITA 2026</h2>
+        <p>Advances in computer vision, multimodal learning, and AR/VR/XR technologies and smart glasses are converging toward Virtual Intelligent Task Assistants (VITAs)—systems that observe, interpret, and guide humans in complex real-world activities. This workshop bridges computer vision foundations and interactive AR/VR/XR research to enable long-term task understanding and assistance. Topics include learning from long streaming egocentric and exocentric videos, multimodal reasoning, task and step prediction, procedure planning and correction, human-AI collaboration and coaching, and new datasets and benchmarks. By fostering dialogue across disciplines, the workshop aims to define the core challenges and opportunities for building practical and generalizable VITAs.</p>
       </div>
-      <nav class="nav-menu">
-        <a href="#intro">Home</a>
-        <a href="#about">About</a>
-        <a href="#speakers">Speakers</a>
-        <a href="#organizers">Organizers</a>
-      </nav>
-    </div>
-  </header>
-
-  <section id="intro">
-    <div class="intro-container">
-      <h1 class="mb-4 pb-0">Vision for Intelligent Task Assistants</h1>
-      <h1 class="mb-4 pb-0 vita-title">VITA</h1>
-      <p class="mb-4 pb-0">The 1st Workshop in Conjunction with <a href="https://cvpr.thecvf.com/" target="_blank" rel="noopener noreferrer">CVPR 2026</a></p>
-      <p class="mb-4 pb-0">June 3, 2026,<br>1:00 PM</p>
-      <a href="#about" class="about-btn scrollto">About VITA 2026</a>
-    </div>
-  </section>
-
-  <section id="about">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6">
-          <h2>About VITA 2026</h2>
-          <p>Advances in computer vision, multimodal learning, and AR/VR/XR technologies and smart glasses are converging toward Virtual Intelligent Task Assistants (VITAs)—systems that observe, interpret, and guide humans in complex real-world activities. This workshop bridges computer vision foundations and interactive AR/VR/XR research to enable long-term task understanding and assistance. Topics include learning from long streaming egocentric and exocentric videos, multimodal reasoning, task and step prediction, procedure planning and correction, human-AI collaboration and coaching, and new datasets and benchmarks. By fostering dialogue across disciplines, the workshop aims to define the core challenges and opportunities for building practical and generalizable VITAs.</p>
-        </div>
-        <div class="col-lg-3">
-          <h3>Where</h3>
-          <p class="venue-info">Room 108,<br>Colorado Convention Center</p>
-        </div>
-        <div class="col-lg-3">
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div class="venue-card">
           <h3>When</h3>
-          <p class="venue-info">June 3, 2026,<br>1:00 PM</p>
+          <p>June 3, 2026<br>1:00 PM</p>
+        </div>
+        <div class="venue-card">
+          <h3>Where</h3>
+          <p>Room 108<br>Colorado Convention Center<br>Denver, CO</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="speakers">
-    <div class="container">
-      <div class="section-header">
-        <h2>Speakers</h2>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-2 col-md-4">
-          <div class="speaker">
-            <a href="https://www.cs.utexas.edu/~grauman/"><img src="img/speakers/kristen.jpg" alt="Speaker 1" class="img-fluid"></a>
-            <div class="details">
-              <h3><a href="https://www.cs.utexas.edu/~grauman/">Kristen Grauman</a></h3>
-              <p>University of Texas at Austin</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-2 col-md-4">
-          <div class="speaker">
-            <a href="https://www.di.ens.fr/~laptev/"><img src="img/speakers/ivan19.jpg" alt="Speaker 2" class="img-fluid"></a>
-            <div class="details">
-              <h3><a href="https://www.di.ens.fr/~laptev/">Ivan Laptev</a></h3>
-              <p>MBZUAI</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-2 col-md-4">
-          <div class="speaker">
-            <a href="https://people.inf.ethz.ch/marc.pollefeys/"><img src="img/speakers/marc.jpg" alt="Speaker 3" class="img-fluid"></a>
-            <div class="details">
-              <h3><a href="https://people.inf.ethz.ch/marc.pollefeys/">Marc Pollefeys</a></h3>
-              <p>ETH Zurich</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-2 col-md-4">
-          <div class="speaker">
-            <a href="https://antoninofurnari.github.io/"><img src="img/speakers/Antonino-Furnari.jpg" alt="Speaker 4" class="img-fluid"></a>
-            <div class="details">
-              <h3><a href="https://antoninofurnari.github.io/">Antonino Furnari</a></h3>
-              <p>University of Catania</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-2 col-md-4">
-          <div class="speaker">
-            <a href="https://www.gedasbertasius.com/"><img src="img/speakers/gb.avif" alt="Speaker 5" class="img-fluid"></a>
-            <div class="details">
-              <h3><a href="https://www.gedasbertasius.com/">Gedas Bertasius</a></h3>
-              <p>University of North Carolina, Chapel Hill</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-2 col-md-4">
-          <div class="speaker">
-            <a href="https://www.cs.columbia.edu/~feiner/"><img src="img/speakers/feiner02.jpg" alt="Speaker 6" class="img-fluid"></a>
-            <div class="details">
-              <h3><a href="https://www.cs.columbia.edu/~feiner/">Steven Feiner</a></h3>
-              <p>Columbia University</p>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- ═══════════ SPEAKERS ═══════════ -->
+<section id="speakers">
+  <div class="container">
+    <div class="section-header">
+      <h2>Speakers</h2>
     </div>
-  </section>
+    <div class="speakers-grid">
 
-  <section id="organizers">
-    <div class="container">
-      <div class="section-header">
-        <h2>Organizers</h2>
+      <div class="speaker-card">
+        <a href="https://www.cs.utexas.edu/~grauman/" target="_blank">
+          <img src="img/speakers/kristen.jpg" alt="Kristen Grauman">
+        </a>
+        <h3><a href="https://www.cs.utexas.edu/~grauman/" target="_blank">Kristen Grauman</a></h3>
+        <p>University of Texas at Austin</p>
       </div>
 
-      <div class="row">
-        <div class="col-lg-3 col-md-6">
-          <div class="organizer">
-            <a href="https://www.isye.gatech.edu/users/mohsen-moghaddam"><img src="img/organizers/mohsen-moghaddam.jpeg" alt="Organizer 1" class="img-fluid" style="width:100%;padding-bottom:0px"></a>
-            <div class="details">
-              <h3><a href="https://www.isye.gatech.edu/users/mohsen-moghaddam">Mohsen Moghaddam</a></h3>
-              <p>Georgia Institute of Technology</p>
-              <div class="social">
-                <a href="https://www.isye.gatech.edu/users/mohsen-moghaddam" target="_blank" rel="noopener noreferrer">🔗</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-          <div class="organizer">
-            <a href="https://www.comp.nus.edu.sg/~ayao/"><img src="img/organizers/angela-yao.png" alt="Organizer 2" class="img-fluid" style="width:100%;padding-bottom:11px"></a>
-            <div class="details">
-              <h3><a href="https://www.comp.nus.edu.sg/~ayao/">Angela Yao</a></h3>
-              <p>National University of Singapore</p>
-              <div class="social">
-                <a href="https://www.comp.nus.edu.sg/~ayao/" target="_blank" rel="noopener noreferrer">🔗</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-          <div class="organizer">
-            <a href="https://web.eecs.umich.edu/~jjcorso/"><img src="img/organizers/pic-jcorso.jpg" alt="Organizer 3" class="img-fluid" style="width:100%;padding-bottom:67px"></a>
-            <div class="details">
-              <h3><a href="https://web.eecs.umich.edu/~jjcorso/">Jason Corso</a></h3>
-              <p>University of Michigan</p>
-              <div class="social">
-                <a href="https://web.eecs.umich.edu/~jjcorso/" target="_blank" rel="noopener noreferrer">🔗</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-          <div class="organizer">
-            <a href="https://www.khoury.northeastern.edu/home/eelhami/"><img src="img/organizers/ehsan_elhamifar_photo.jpg" alt="Organizer 4" class="img-fluid" style="width:100%;padding-bottom:8px"></a>
-            <div class="details">
-              <h3><a href="https://www.khoury.northeastern.edu/home/eelhami/">Ehsan Elhamifar</a></h3>
-              <p>Northeastern University</p>
-              <div class="social">
-                <a href="https://www.khoury.northeastern.edu/home/eelhami/" target="_blank" rel="noopener noreferrer">🔗</a>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="speaker-card">
+        <a href="https://www.di.ens.fr/~laptev/" target="_blank">
+          <img src="img/speakers/ivan19.jpg" alt="Ivan Laptev">
+        </a>
+        <h3><a href="https://www.di.ens.fr/~laptev/" target="_blank">Ivan Laptev</a></h3>
+        <p>MBZUAI</p>
       </div>
+
+      <div class="speaker-card">
+        <a href="https://people.inf.ethz.ch/marc.pollefeys/" target="_blank">
+          <img src="img/speakers/marc.jpg" alt="Marc Pollefeys">
+        </a>
+        <h3><a href="https://people.inf.ethz.ch/marc.pollefeys/" target="_blank">Marc Pollefeys</a></h3>
+        <p>ETH Zurich</p>
+      </div>
+
+      <div class="speaker-card">
+        <a href="https://antoninofurnari.github.io/" target="_blank">
+          <img src="img/speakers/Antonino-Furnari.jpg" alt="Antonino Furnari">
+        </a>
+        <h3><a href="https://antoninofurnari.github.io/" target="_blank">Antonino Furnari</a></h3>
+        <p>University of Catania</p>
+      </div>
+
+      <div class="speaker-card">
+        <a href="https://www.gedasbertasius.com/" target="_blank">
+          <img src="img/speakers/gb.avif" alt="Gedas Bertasius">
+        </a>
+        <h3><a href="https://www.gedasbertasius.com/" target="_blank">Gedas Bertasius</a></h3>
+        <p>University of North Carolina, Chapel Hill</p>
+      </div>
+
+      <div class="speaker-card">
+        <a href="https://www.cs.columbia.edu/~feiner/" target="_blank">
+          <img src="img/speakers/feiner02.jpg" alt="Steven Feiner">
+        </a>
+        <h3><a href="https://www.cs.columbia.edu/~feiner/" target="_blank">Steven Feiner</a></h3>
+        <p>Columbia University</p>
+      </div>
+
     </div>
-  </section>
+  </div>
+</section>
 
-  <script>
-    // Header scroll effect
-    window.addEventListener('scroll', function() {
-      const header = document.getElementById('header');
-      if (window.scrollY > 100) {
-        header.classList.add('header-scrolled');
-      } else {
-        header.classList.remove('header-scrolled');
-      }
-    });
-  </script>
+<!-- ═══════════ ORGANIZERS ═══════════ -->
+<section id="organizers">
+  <div class="container">
+    <div class="section-header">
+      <h2>Organizers</h2>
+    </div>
+    <div class="organizers-grid">
+
+      <div class="organizer-card">
+        <a href="https://www.isye.gatech.edu/users/mohsen-moghaddam" target="_blank">
+          <img src="img/organizers/mohsen-moghaddam.jpeg" alt="Mohsen Moghaddam">
+        </a>
+        <div class="organizer-info">
+          <h3><a href="https://www.isye.gatech.edu/users/mohsen-moghaddam" target="_blank">Mohsen Moghaddam</a></h3>
+          <p>Georgia Institute of Technology</p>
+          <a href="https://www.isye.gatech.edu/users/mohsen-moghaddam" target="_blank" class="link-icon">🔗</a>
+        </div>
+      </div>
+
+      <div class="organizer-card">
+        <a href="https://www.comp.nus.edu.sg/~ayao/" target="_blank">
+          <img src="img/organizers/angela-yao.png" alt="Angela Yao">
+        </a>
+        <div class="organizer-info">
+          <h3><a href="https://www.comp.nus.edu.sg/~ayao/" target="_blank">Angela Yao</a></h3>
+          <p>National University of Singapore</p>
+          <a href="https://www.comp.nus.edu.sg/~ayao/" target="_blank" class="link-icon">🔗</a>
+        </div>
+      </div>
+
+      <div class="organizer-card">
+        <a href="https://web.eecs.umich.edu/~jjcorso/" target="_blank">
+          <img src="img/organizers/pic-jcorso.jpg" alt="Jason Corso">
+        </a>
+        <div class="organizer-info">
+          <h3><a href="https://web.eecs.umich.edu/~jjcorso/" target="_blank">Jason Corso</a></h3>
+          <p>University of Michigan</p>
+          <a href="https://web.eecs.umich.edu/~jjcorso/" target="_blank" class="link-icon">🔗</a>
+        </div>
+      </div>
+
+      <div class="organizer-card">
+        <a href="https://www.khoury.northeastern.edu/home/eelhami/" target="_blank">
+          <img src="img/organizers/ehsan_elhamifar_photo.jpg" alt="Ehsan Elhamifar">
+        </a>
+        <div class="organizer-info">
+          <h3><a href="https://www.khoury.northeastern.edu/home/eelhami/" target="_blank">Ehsan Elhamifar</a></h3>
+          <p>Northeastern University</p>
+          <a href="https://www.khoury.northeastern.edu/home/eelhami/" target="_blank" class="link-icon">🔗</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <p>VITA 2026 &nbsp;·&nbsp; Workshop on Vision for Intelligent Task Assistants &nbsp;·&nbsp; <a href="https://cvpr.thecvf.com/" target="_blank">CVPR 2026</a></p>
+</footer>
+
+<!-- ═══════════ SCRIPTS ═══════════ -->
+<script>
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('header').classList.toggle('scrolled', window.scrollY > 80);
+  });
+</script>
+
+<script>
+/* ════════════════════════════════════════════════
+   ANIMATED AR CANVAS BACKGROUND (hero only)
+════════════════════════════════════════════════ */
+const canvas  = document.getElementById('vita-canvas');
+const ctx     = canvas.getContext('2d');
+const section = document.getElementById('intro');
+
+let W, H;
+function resize() {
+  W = canvas.width  = section.offsetWidth;
+  H = canvas.height = section.offsetHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const CYAN  = [80,  210, 230];
+const TEAL  = [30,  160, 180];
+const GREEN = [60,  220, 160];
+function rgb(c, a = 1) { return `rgba(${c[0]},${c[1]},${c[2]},${a})`; }
+
+/* 1. PARTICLES */
+class Particle {
+  constructor() { this.reset(true); }
+  reset(init = false) {
+    this.x     = Math.random() * W;
+    this.y     = init ? Math.random() * H : -2;
+    this.z     = Math.random();
+    this.r     = this.z * 1.6 + 0.3;
+    this.speed = this.z * 0.25 + 0.05;
+    this.col   = Math.random() < 0.7 ? CYAN : (Math.random() < 0.5 ? TEAL : GREEN);
+    this.alpha = this.z * 0.5 + 0.05;
+  }
+  update() { this.y += this.speed; if (this.y > H + 4) this.reset(); }
+  draw() {
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+    ctx.fillStyle = rgb(this.col, this.alpha); ctx.fill();
+  }
+}
+const particles = Array.from({length: 280}, () => new Particle());
+
+/* 2. BOUNDING BOXES */
+class BBox {
+  constructor() { this.init(); }
+  init() {
+    const pw = W*0.08, ph = H*0.06, mw = W*0.28, mh = H*0.28;
+    this.w = pw + Math.random()*(mw-pw); this.h = ph + Math.random()*(mh-ph);
+    this.x = Math.random()*(W-this.w);   this.y = Math.random()*(H-this.h);
+    this.vx = (Math.random()-0.5)*0.18;  this.vy = (Math.random()-0.5)*0.12;
+    const types = ['object','hand','tool','task 1','action 2','task 2','action 5','action 7'];
+    this.label = types[Math.floor(Math.random()*types.length)];
+    this.conf  = (0.72 + Math.random()*0.27).toFixed(2);
+    this.col   = Math.random()<0.5 ? CYAN : (Math.random()<0.5 ? GREEN : TEAL);
+    this.alpha = 0; this.targetAlpha = 0.25 + Math.random()*0.35;
+    this.age = 0; this.life = 260 + Math.random()*400;
+    this.cs = Math.min(this.w, this.h)*0.18; this.pulse = Math.random()*Math.PI*2;
+  }
+  update() {
+    this.age++; this.pulse += 0.025;
+    if (this.age < 40)             this.alpha += (this.targetAlpha - this.alpha)*0.08;
+    if (this.age > this.life - 40) this.alpha *= 0.93;
+    if (this.age > this.life)      this.init();
+    this.x += this.vx; this.y += this.vy;
+    if (this.x < 0 || this.x+this.w > W) this.vx *= -1;
+    if (this.y < 0 || this.y+this.h > H) this.vy *= -1;
+  }
+  draw() {
+    const a = this.alpha*(0.85+0.15*Math.sin(this.pulse)), c = this.col;
+    const [x,y,w,h,cs] = [this.x,this.y,this.w,this.h,this.cs];
+    ctx.strokeStyle = rgb(c,a); ctx.lineWidth = 1;
+    for (const [cx,cy,sx,sy] of [[x,y,1,1],[x+w,y,-1,1],[x,y+h,1,-1],[x+w,y+h,-1,-1]]) {
+      ctx.beginPath(); ctx.moveTo(cx+sx*cs,cy); ctx.lineTo(cx,cy); ctx.lineTo(cx,cy+sy*cs); ctx.stroke();
+    }
+    ctx.save(); ctx.setLineDash([4,8]);
+    ctx.strokeStyle = rgb(c,a*0.3); ctx.strokeRect(x,y,w,h); ctx.restore();
+    ctx.fillStyle = rgb(c,a*0.7); ctx.fillRect(x,y-16,78,16);
+    ctx.fillStyle = rgb([0,0,0],0.8); ctx.font = '9px Courier New';
+    ctx.fillText(`${this.label} ${this.conf}`, x+5, y-5);
+  }
+}
+const bboxes = Array.from({length: 9}, () => new BBox());
+
+/* 3. TRACK POINTS */
+class TrackPoint {
+  constructor() { this.init(); }
+  init() {
+    this.x = W*0.15+Math.random()*W*0.70; this.y = H*0.10+Math.random()*H*0.80;
+    this.r = 2+Math.random()*2.5; this.pulse = Math.random()*Math.PI*2;
+    this.col = Math.random()<0.6 ? CYAN : GREEN; this.alpha = 0.15+Math.random()*0.5;
+    this.age = 0; this.life = 300+Math.random()*500;
+    this.vx = (Math.random()-0.5)*0.08; this.vy = (Math.random()-0.5)*0.05;
+  }
+  update() { this.age++; this.pulse+=0.04; if(this.age>this.life) this.init(); this.x+=this.vx; this.y+=this.vy; }
+  draw() {
+    const a = this.alpha*(0.7+0.3*Math.sin(this.pulse));
+    ctx.beginPath(); ctx.arc(this.x,this.y,this.r*2.2,0,Math.PI*2);
+    ctx.strokeStyle=rgb(this.col,a*0.35); ctx.lineWidth=0.5; ctx.stroke();
+    ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+    ctx.fillStyle=rgb(this.col,a); ctx.fill();
+  }
+}
+const trackPoints = Array.from({length: 55}, () => new TrackPoint());
+
+/* 4. SCAN LINE */
+let scanY = 0;
+function drawScan() {
+  scanY = (scanY+0.6)%H;
+  const g = ctx.createLinearGradient(0,scanY-30,0,scanY+30);
+  g.addColorStop(0,'rgba(60,210,230,0)'); g.addColorStop(0.5,'rgba(60,210,230,0.06)'); g.addColorStop(1,'rgba(60,210,230,0)');
+  ctx.fillStyle=g; ctx.fillRect(0,scanY-30,W,60);
+}
+
+/* 5. RETICLE */
+function drawReticle(t) {
+  const cx=W/2, cy=H/2, R=Math.min(W,H)*0.09;
+  const a = (0.7+0.3*Math.sin(t*0.001))*0.35;
+  ctx.save(); ctx.lineWidth=1;
+  for (let i=0;i<4;i++) {
+    ctx.beginPath(); ctx.arc(cx,cy,R,i*Math.PI/2+0.28,(i+1)*Math.PI/2-0.28);
+    ctx.strokeStyle=rgb(CYAN,a); ctx.stroke();
+    const ang=i*Math.PI/2;
+    ctx.beginPath(); ctx.moveTo(cx+Math.cos(ang)*R,cy+Math.sin(ang)*R);
+    ctx.lineTo(cx+Math.cos(ang)*(R+10),cy+Math.sin(ang)*(R+10));
+    ctx.strokeStyle=rgb(CYAN,a*0.7); ctx.stroke();
+  }
+  const cs=R*0.18; ctx.strokeStyle=rgb(CYAN,a*0.5);
+  ctx.beginPath(); ctx.moveTo(cx-cs,cy); ctx.lineTo(cx+cs,cy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx,cy-cs); ctx.lineTo(cx,cy+cs); ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx,cy,2,0,Math.PI*2);
+  ctx.fillStyle=rgb(CYAN,a*1.2); ctx.fill();
+  ctx.restore();
+}
+
+/* 6. DEPTH GRID */
+function drawGrid() {
+  const vanX=W/2, vanY=H*0.48, spread=W*1.6, lines=14;
+  ctx.save();
+  for (let i=0;i<=lines;i++) {
+    const x=vanX-spread/2+(spread/lines)*i;
+    ctx.beginPath(); ctx.moveTo(vanX,vanY); ctx.lineTo(x,H*1.1);
+    ctx.strokeStyle=rgb(TEAL,0.07); ctx.lineWidth=0.8; ctx.stroke();
+  }
+  for (let j=0;j<=8;j++) {
+    const t2=j/8, ease=t2*t2, yy=vanY+ease*(H*1.1-vanY), hw=(ease*spread)/2;
+    ctx.beginPath(); ctx.moveTo(vanX-hw,yy); ctx.lineTo(vanX+hw,yy);
+    ctx.strokeStyle=rgb(TEAL,0.06*(1-t2*0.5)); ctx.lineWidth=0.6; ctx.stroke();
+  }
+  ctx.restore();
+}
+
+/* 7. HUD */
+const hudL = ['EGO-CAM FEED  · ACTIVE','STEP DETECTION · v4.1','ACTION SEG     · 98.3%','TASK PROGRESS  ██████░░░ 74%','NEXT STEP: ALIGN COMPONENT','PROC PLANNING  · ON','AR OVERLAY     · ENABLED'];
+const hudR = ['FRAME: 00042841','FPS:   30.0','RIGHT HAND: DETECTED ✓','OBJ ID: 6','CONTACT: NONE','GAZE: DISTRACTED','ASSIST: ACTIVE'];
+
+function drawHUD() {
+  ctx.fillStyle='rgba(0,10,25,0.55)'; ctx.fillRect(18,H*0.28-18,230,hudL.length*18+10);
+  ctx.fillStyle='rgba(0,10,25,0.55)'; ctx.fillRect(W-178,H*0.28-18,170,hudR.length*18+10);
+  ctx.font='bold 12px Courier New'; ctx.fillStyle=rgb(CYAN,0.50);
+  hudL.forEach((l,i)=>ctx.fillText(l,28,H*0.28+i*18));
+  hudR.forEach((l,i)=>ctx.fillText(l,W-170,H*0.28+i*18));
+  ctx.strokeStyle=rgb(CYAN,0.12); ctx.lineWidth=0.5;
+  ctx.beginPath(); ctx.moveTo(28,H*0.28-8); ctx.lineTo(220,H*0.28-8); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(W-170,H*0.28-8); ctx.lineTo(W-10,H*0.28-8); ctx.stroke();
+  ctx.fillStyle=rgb(TEAL,0.15);
+  ctx.fillRect(0,0,W,2); ctx.fillRect(0,H-2,W,2);
+}
+
+/* 8. CONNECTIONS */
+function drawConnections() {
+  const pts = trackPoints.filter(p=>p.alpha>0.25);
+  for (let i=0;i<pts.length;i++) for (let j=i+1;j<pts.length;j++) {
+    const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.sqrt(dx*dx+dy*dy);
+    if (d<90) { ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.strokeStyle=rgb(TEAL,(1-d/90)*0.08); ctx.lineWidth=0.5; ctx.stroke(); }
+  }
+}
+
+/* BACKGROUND */
+function drawBackground() {
+  const g=ctx.createRadialGradient(W/2,H*0.42,0,W/2,H*0.42,Math.max(W,H)*0.72);
+  g.addColorStop(0,'rgba(5,22,48,1)'); g.addColorStop(0.5,'rgba(3,12,28,1)'); g.addColorStop(1,'rgba(2,7,18,1)');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+}
+
+/* LOOP */
+function animate(t) {
+  drawBackground(); drawGrid();
+  for (const p  of particles)   { p.update();  p.draw(); }
+  drawConnections();
+  for (const tp of trackPoints) { tp.update(); tp.draw(); }
+  for (const bb of bboxes)      { bb.update(); bb.draw(); }
+  drawScan(); drawReticle(t); drawHUD();
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+</script>
+
 </body>
 </html>
