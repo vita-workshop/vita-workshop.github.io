@@ -735,7 +735,7 @@ function drawReticle(t) {
     ctx.lineTo(cx+Math.cos(ang)*(R+10),cy+Math.sin(ang)*(R+10));
     ctx.strokeStyle=rgb(CYAN,a*0.7); ctx.stroke();
   }
-  const cs=R*0.18; ctx.strokeStyle=rgb(CYAN,a*0.5);
+  const cs=R*0.18; ctx.strokeStyle=rgb(CYAN,a*0.45);
   ctx.beginPath(); ctx.moveTo(cx-cs,cy); ctx.lineTo(cx+cs,cy); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(cx,cy-cs); ctx.lineTo(cx,cy+cs); ctx.stroke();
   ctx.beginPath(); ctx.arc(cx,cy,2,0,Math.PI*2);
